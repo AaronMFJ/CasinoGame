@@ -1,27 +1,32 @@
 //INCLUDES
 #include <iostream>
 #include <string>
-
+#include <ctime>
 
 
 //DECLARATIONS
 using namespace std;
 
 
-
 //GLOBAL VARIABLES
 string playerName;			//string for player's name
 int playerMoney = 20;		//variable for player's money. Re-factor to header with class later
 int playerSelection = 0;	//choice player makes at each sequence
-int playerGuess = 0;
+int playerGuess = 0;		//the player's number guess, between 0-101
+int randNumber = 0;			//the randomly generated number from the house
 
 
 //FUNCTIONS
 int playerChoiceFunc(int playerSelection);
-int selectionScreen();
+void selectionScreen();
+int guessMath(int playerGuess);
+
 
 int main()
 {
+	//initialize random seed off clock time
+	srand(time(NULL));
+
 	//Introduction and get player's name
 	cout << "Welcome to Guessing Game!\n";
 	cout << "\n Please enter your name. ";
@@ -35,54 +40,17 @@ int main()
 	//Display starting amount, or amount in file
 	cout << ". You have $" << playerMoney << endl;
 
+	//display the selection screen and make a choice
 	selectionScreen();
-	
-	cout << playerSelection;
 
-	//cout << "\nWhat would you like to do?\n"		//re-factor this into the selection function
-	//	<< "Press 1 for game rules.\n"
-	//	<< "Press 2 to enter your guess.\n"
-	//	<< "Press 3 to to access bank.\n"
-	//	<< "Press 0 to quit.\n";
-	//cin >> playerSelection;
-
-	playerChoiceFunc(playerSelection);
-
-					//			FUTURE UPDATE
-					//This is going to be handled in a function
-					// for player selection choices
-	//if (playerSelection == 0)
-	//	{
-	//		return -1;
-	//	}
-	//if (playerSelection == 1)
-	//	{
-	//		//re-factor to playerSelection function
-	//		cout << "directions!"; 
-	//		cout << "\nWhat would you like to do?\n"		//re-factor this into the selection function
-	//			<< "Press 1 for game rules.\n"
-	//			<< "Press 2 to enter your guess.\n"
-	//			<< "Press 3 to to access bank.\n"
-	//			<< "Press 0 to quit.\n";
-	//		cin >> playerSelection;
-	//	}
-	//if (playerSelection == 2)
-	//{
-	//	cout << "Enter your guess, between 0 and 101. ";
-	//	cin >> playerGuess;
-	//	if (playerGuess <= 0)
-	//		{
-	//			cout << playerGuess << "is not a valid choice. Try again. ";
-	//			cin >> playerGuess;			//consider making the statement a while loop for multiple wrong choices
-	//		}
-	//}
+//	playerChoiceFunc(playerSelection);
 
 	system("PAUSE");
 	return 0;
 }
 
-//FUNCTION FOR PLAYER CHOICE LAYOUT
-int selectionScreen()
+//////////FUNCTION FOR PLAYER CHOICE LAYOUT//////////
+void selectionScreen()
 {
 	//ask player what he wants to do
 	cout << "\nWhat would you like to do?\n"
@@ -95,15 +63,12 @@ int selectionScreen()
 	cin >> playerSelection;
 	
 	//send player's selection to the choice function
-	int playerChoiceFunc(playerSelection);
+	playerChoiceFunc(playerSelection);
 	
-	return playerSelection;
 
 }
 
-
-
-//Function Call for what the player chooses to do
+//////////Function Call for what the player chooses to do//////////
 int playerChoiceFunc(int playerSelection)
 {
 	//this function is where we take players input and match it to desired choice
@@ -117,28 +82,77 @@ int playerChoiceFunc(int playerSelection)
 	//if player selects 1, display directions the get input again
 	if (playerSelection == 1)
 	{
-		cout << "The point of the game is to guess a number and get as close as possible to a randomly generated number. It costs $5 to guess.\n";
-
-		int selectionScreen(playerSelection);
+		cout << "The point of the game is to guess a number and get as close as \
+				possible to a randomly generated number. It costs $5 to guess.\n";
+		selectionScreen();
 	}
 
 	//if player selects 2, let them guess!
 	if (playerSelection == 2)
 	{
-		cout << "Enter your guess, between 0 and 101. ";
+		cout << "\nEnter your guess, between 0 and 101. ";
 		cin >> playerGuess;
 
 		//this is where we handle if player selects an out-of-range number
-		while (true)
+		while (playerGuess <= 0 || playerGuess >= 101)		 //remake this into declaration GUESS_MIN and GUESS_MAX
 		{
-			if (playerGuess <= 0)
-			{
-				cout << playerGuess << "is not a valid choice. Try again./n";
-				cin >> playerGuess;
-			}
+			cout << playerGuess << "\nis not a valid choice. Try again.\n" << endl;
+			cin >> playerGuess;
 		}
 
+		//This is where we send the player's guess to randomly generated number	
+		cout << "\nYou guessed " << playerGuess << endl;
+		guessMath(playerGuess);
+	
 	}
+	return 0;
+}
+
+//////////Function for generating random number and comparing against player guess//////////
+int guessMath(int playerGuess)
+{
+	int guessDifference = 0;
+
+	playerGuess = playerGuess;						//just making sure playerGuess isn't lost
+
+	randNumber = rand() % 101;						//randomly selects a number off rand. Revisit this -- allows 0 and shouldn't
+	cout << "The random number is " << randNumber << endl;
+	
+	guessDifference = (randNumber - playerGuess);	//find the difference between the guess and the rand number
+	
+	guessDifference = abs(guessDifference);			//make it a positive if negative
+
+	//if guess is more than 20 away from random
+	if (guessDifference > 20)	
+	{
+		cout << "Sorry, your guess was " << guessDifference << " points away from the random number. You lose $20." << endl;
+	}
+
+	//if guess is between 10 and 20 away from the rand
+	if (guessDifference <= 20 && guessDifference > 10)
+	{
+		cout << "Congrats! Your answer is within 20. You win $20." << endl;
+	}
+
+	//if guess is between 5 and 10 away from the rand
+	if (guessDifference <= 10 && guessDifference > 5)
+	{
+		cout << "Congrats! Your answer is within 10. You win $30." << endl;
+	}
+
+	//if guess is between 0 and 5 away from the rand
+	if (guessDifference < 5 && guessDifference != 0)
+	{
+		cout << "Congrats! Your answer is within 5. You win $50." << endl;
+	}
+
+	//if guess is spot on!
+	if (randNumber == playerGuess)
+	{
+		cout << "SPOT ON! You win $100." << endl;
+	}
+
+	return randNumber;
 }
 
 
