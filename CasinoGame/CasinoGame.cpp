@@ -35,7 +35,9 @@ int main()
 	//Display starting amount, or amount in file
 	cout << ". You have $" << playerMoney << endl;
 
-	int selectionScreen(); ///////this is where I'm at. Need to figure out what to pass. Maybe VOID instead of INT
+	selectionScreen();
+	
+	cout << playerSelection;
 
 	//cout << "\nWhat would you like to do?\n"		//re-factor this into the selection function
 	//	<< "Press 1 for game rules.\n"
@@ -44,7 +46,7 @@ int main()
 	//	<< "Press 0 to quit.\n";
 	//cin >> playerSelection;
 
-	int playerChoiceFunc(int playerSelection);
+	playerChoiceFunc(playerSelection);
 
 					//			FUTURE UPDATE
 					//This is going to be handled in a function
