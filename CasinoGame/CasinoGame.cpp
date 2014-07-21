@@ -10,11 +10,11 @@ using namespace std;
 
 //GLOBAL VARIABLES
 string playerName;			//string for player's name
-int playerMoney = 20;		//variable for player's money. Re-factor to header with class later
+int playerMoney     = 20;   //variable for player's money. Re-factor to header with class later
 int playerSelection = 0;	//choice player makes at each sequence
-int playerGuess = 0;		//the player's number guess, between 0-101
-int randNumber = 0;			//the randomly generated number from the house
-
+int playerGuess     = 0;	//the player's number guess, between 0-101
+int randNumber      = 0;	//the randomly generated number from the house
+double playerMoney  = 0;	//amount of money the player has
 
 //FUNCTIONS
 int playerChoiceFunc(int playerSelection);
@@ -65,7 +65,8 @@ void selectionScreen()
 	//send player's selection to the choice function
 	playerChoiceFunc(playerSelection);
 	
-
+	//continue letting player play, until he exits out
+	selectionScreen();
 }
 
 //////////Function Call for what the player chooses to do//////////
@@ -115,7 +116,7 @@ int guessMath(int playerGuess)
 
 	playerGuess = playerGuess;						//just making sure playerGuess isn't lost
 
-	randNumber = rand() % 101;						//randomly selects a number off rand. Revisit this -- allows 0 and shouldn't
+	randNumber = rand() % 100 + 1;					//randomly selects a number off rand. +1 so number is never 0.
 	cout << "The random number is " << randNumber << endl;
 	
 	guessDifference = (randNumber - playerGuess);	//find the difference between the guess and the rand number
@@ -152,8 +153,12 @@ int guessMath(int playerGuess)
 		cout << "SPOT ON! You win $100." << endl;
 	}
 
+	//add player calculation moneys function here
+
 	return randNumber;
 }
+
+//////////Function for generating calculating player money//////////
 
 
 
