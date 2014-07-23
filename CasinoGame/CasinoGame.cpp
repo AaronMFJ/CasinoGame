@@ -37,9 +37,6 @@ int main()
 					//This is where we will check a file for
 					// the player's name, and load any stats
 
-	//Display starting amount, or amount in file
-	cout << ". You have $" << playerMoney << endl;
-
 	//display the selection screen and make a choice
 	selectionScreen();
 
@@ -53,11 +50,12 @@ int main()
 void selectionScreen()
 {
 	//ask player what he wants to do
-	cout << "\nWhat would you like to do?\n"
-		<< "Press 1 for game rules.\n"
-		<< "Press 2 to enter your guess.\n"
-		<< "Press 3 to to access bank.\n"
-		<< "Press 0 to quit.\n";
+	cout << "\nYou have $" << playerMoney << endl;
+	cout << "What would you like to do?\n"
+		 << "\nPress 1 for game rules.\n"
+		 << "Press 2 to enter your guess.\n"
+		 << "Press 3 to to access bank.\n"
+		 << "Press 0 to quit.\n";
 	
 	//grab input
 	cin >> playerSelection;
@@ -77,7 +75,7 @@ int playerChoiceFunc(int playerSelection)
 	//if player presses 0, exit son!
 	if (playerSelection == 0)
 	{
-		return -1;
+		return -1;			//need to figure out how to exit game. Maybe send to quit function?
 	}
 	
 	//if player selects 1, display directions the get input again
@@ -113,9 +111,14 @@ int playerChoiceFunc(int playerSelection)
 int guessMath(int playerGuess)
 {
 	int guessDifference = 0;
-
-
 	playerGuess = playerGuess;									//just making sure playerGuess isn't lost
+
+	if (playerMoney < 5)										//borrow or quit if player has <5.
+	{
+		cout << "Sorry, you have " << playerMoney << ", which is not enough money to play. Would you like to visit bank or leave?" << endl;
+	}
+	
+	playerMoney = playerMoney - 5;								//subtract 5 for guessing
 
 	randNumber = rand() % 100 + 1;								//randomly selects a number off rand. +1 so number is never 0.
 	cout << "The random number is " << randNumber << endl;
@@ -171,8 +174,7 @@ int guessMath(int playerGuess)
 //add winning and losing money here
 //}
 
-
-
+///need to rewrite the losing amount to scale better and not always lose 20 with a wrong guess
 /*
 ---Features
 Store player info in file
