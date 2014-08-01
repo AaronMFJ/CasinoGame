@@ -10,7 +10,7 @@ using namespace std;
 
 //GLOBAL VARIABLES
 string playerName;			//string for player's name
-double playerMoney     = 20;   //variable for player's money. Re-factor to header with class later
+double playerMoney  = 20;   //variable for player's money. Re-factor to header with class later
 int playerSelection = 0;	//choice player makes at each sequence
 int playerGuess     = 0;	//the player's number guess, between 0-101
 int randNumber      = 0;	//the randomly generated number from the house
@@ -72,6 +72,8 @@ int playerChoiceFunc(int playerSelection)
 {
 	//this function is where we take players input and match it to desired choice
 	
+	int tempChoice = 0;
+
 	//if player presses 0, exit son!
 	if (playerSelection == 0)
 	{
@@ -89,6 +91,20 @@ int playerChoiceFunc(int playerSelection)
 	//if player selects 2, let them guess!
 	if (playerSelection == 2)
 	{
+		//borrow or quit if player has <5. 
+		if (playerMoney < 5)										
+		{
+			cout << "Sorry, you have " << playerMoney << ", which is not enough money to play. Would you like to visit bank(1) or quit(0)?" << endl;
+			cin >> tempChoice;
+			if (tempChoice == 1)
+			{
+				cout << "The bank is currently under development. Exiting.";
+			}
+			else if (tempChoice == 0)
+			{
+				return -1;			//wtf to return here? Need an exit.
+			}
+		}
 		cout << "\nEnter your guess, between 0 and 101. ";
 		cin >> playerGuess;
 
@@ -113,10 +129,11 @@ int guessMath(int playerGuess)
 	int guessDifference = 0;
 	playerGuess = playerGuess;									//just making sure playerGuess isn't lost
 
-	if (playerMoney < 5)										//borrow or quit if player has <5.
-	{
-		cout << "Sorry, you have " << playerMoney << ", which is not enough money to play. Would you like to visit bank or leave?" << endl;
-	}
+	//if (playerMoney < 5)										//borrow or quit if player has <5.
+	//{
+	//	cout << "Sorry, you have " << playerMoney << ", which is not enough money to play. Would you like to visit bank or leave?" << endl;
+	//	return playerMoney;
+	//}
 	
 	playerMoney = playerMoney - 5;								//subtract 5 for guessing
 
@@ -127,40 +144,65 @@ int guessMath(int playerGuess)
 	
 	guessDifference = abs(guessDifference);						//make it a positive if negative
 
-	//if guess is more than 20 away from random
-	if (guessDifference > 20)	
-	{
-		cout << "Sorry, your guess was " << guessDifference << " points away from the random number. You lose $20." << endl;
-		playerMoney = playerMoney - 20;
-	}
-
-	//if guess is between 10 and 20 away from the rand
-	if (guessDifference <= 20 && guessDifference > 10)
-	{
-		cout << "Congrats! Your answer is within 20. You win $20." << endl;
-		playerMoney = playerMoney + 20;
-	}
-
-	//if guess is between 5 and 10 away from the rand
-	if (guessDifference <= 10 && guessDifference > 5)
-	{
-		cout << "Congrats! Your answer is within 10. You win $30." << endl;
-		playerMoney = playerMoney + 30;
-	}
-
-	//if guess is between 0 and 5 away from the rand
-	if (guessDifference < 5 && guessDifference != 0)
-	{
-		cout << "Congrats! Your answer is within 5. You win $50." << endl;
-		playerMoney = playerMoney + 50;
-	}
-
 	//if guess is spot on!
 	if (randNumber == playerGuess)
 	{
 		cout << "SPOT ON! You win $100." << endl;
-		playerMoney = playerMoney + 100;
+		playerMoney += 100;
 	}
+
+	//if guess is more than 20 but below 30 away from random
+	else if (guessDifference > 20 && guessDifference < 30)
+		{
+		cout << "Sorry, your guess was " << guessDifference << " points away from the random number. You lose $5." << endl;
+		playerMoney -= 5;
+		}
+	
+	//if guess is more than 30 but below 40 away from random
+	else if (guessDifference > 29 && guessDifference < 40)
+		{
+			cout << "Sorry, your guess was " << guessDifference << " points away from the random number. You lose $10." << endl;
+			playerMoney -= 10;
+		}
+
+	//if guess is more than 40 but below 50 away from random
+	else if (guessDifference > 39 && guessDifference < 50)
+		{
+		cout << "Sorry, your guess was " << guessDifference << " points away from the random number. You lose $15." << endl;
+		playerMoney -= 15;
+		}
+
+	//if guess is more than 50 
+	else if (guessDifference > 49)
+		{
+			cout << "Sorry, your guess was " << guessDifference << " points away from the random number. You lose $20." << endl;
+			playerMoney -= 20;
+		}
+
+	//if guess is between 10 and 20 away from the rand
+	else if (guessDifference <= 20 && guessDifference > 10)
+		{
+			cout << "Congrats! Your answer is within 20. You win $20." << endl;
+			playerMoney += 20;
+		}
+
+	//if guess is between 5 and 10 away from the rand
+	else if (guessDifference <= 10 && guessDifference > 5)
+		{
+			cout << "Congrats! Your answer is within 10. You win $30." << endl;
+			playerMoney += 30;
+		}
+
+	//if guess is between 0 and 5 away from the rand
+	else if (guessDifference < 5 && guessDifference != 0)
+		{
+			cout << "Congrats! Your answer is within 5. You win $50." << endl;
+			playerMoney += 50;
+		}
+
+	
+
+
 
 	//add player calculation moneys function here
 	//moneyCalculation(playerMoney);
