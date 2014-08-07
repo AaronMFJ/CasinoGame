@@ -19,6 +19,7 @@ int randNumber      = 0;	//the randomly generated number from the house
 int playerChoiceFunc(int playerSelection);
 void selectionScreen();
 int guessMath(int playerGuess);
+void bankOverlord();
 //int moneyCalculation(double playerMoney);
 
 
@@ -84,7 +85,7 @@ int playerChoiceFunc(int playerSelection)
 	if (playerSelection == 1)
 	{
 		cout << "The point of the game is to guess a number and get as close as \
-				possible to a randomly generated number. It costs $5 to guess.\n";
+		possible to a randomly generated number. It costs $5 to guess.\n";
 		selectionScreen();
 	}
 
@@ -98,11 +99,12 @@ int playerChoiceFunc(int playerSelection)
 			cin >> tempChoice;
 			if (tempChoice == 1)
 			{
-				cout << "The bank is currently under development. Exiting.";
+				bankOverlord();
+				//cout << "The bank is currently under development. Exiting.";
 			}
 			else if (tempChoice == 0)
 			{
-				return -1;			//wtf to return here? Need an exit.
+				return 1;			//wtf to return here? Need an exit.
 			}
 		}
 		cout << "\nEnter your guess, between 0 and 101. ";
@@ -118,7 +120,12 @@ int playerChoiceFunc(int playerSelection)
 		//This is where we send the player's guess to randomly generated number	
 		cout << "\nYou guessed " << playerGuess << endl;
 		guessMath(playerGuess);
+	}
 	
+	//if player selects 3, take to the bank!
+	if (playerSelection == 3)
+	{
+		bankOverlord();
 	}
 	return 0;
 }
@@ -128,12 +135,6 @@ int guessMath(int playerGuess)
 {
 	int guessDifference = 0;
 	playerGuess = playerGuess;									//just making sure playerGuess isn't lost
-
-	//if (playerMoney < 5)										//borrow or quit if player has <5.
-	//{
-	//	cout << "Sorry, you have " << playerMoney << ", which is not enough money to play. Would you like to visit bank or leave?" << endl;
-	//	return playerMoney;
-	//}
 	
 	playerMoney = playerMoney - 5;								//subtract 5 for guessing
 
@@ -179,30 +180,26 @@ int guessMath(int playerGuess)
 			playerMoney -= 20;
 		}
 
-	//if guess is between 10 and 20 away from the rand
+	//if guess is between 10 and 20 away from the rand. Include 20
 	else if (guessDifference <= 20 && guessDifference > 10)
 		{
 			cout << "Congrats! Your answer is within 20. You win $20." << endl;
 			playerMoney += 20;
 		}
 
-	//if guess is between 5 and 10 away from the rand
+	//if guess is between 5 and 10 away from the rand. Include 10
 	else if (guessDifference <= 10 && guessDifference > 5)
 		{
 			cout << "Congrats! Your answer is within 10. You win $30." << endl;
 			playerMoney += 30;
 		}
 
-	//if guess is between 0 and 5 away from the rand
-	else if (guessDifference < 5 && guessDifference != 0)
+	//if guess is between 0 and 5 away from the rand. Include 5
+	else if (guessDifference <= 5 && guessDifference != 0)
 		{
 			cout << "Congrats! Your answer is within 5. You win $50." << endl;
 			playerMoney += 50;
 		}
-
-	
-
-
 
 	//add player calculation moneys function here
 	//moneyCalculation(playerMoney);
@@ -210,13 +207,38 @@ int guessMath(int playerGuess)
 	return randNumber;
 }
 
+
+////////////////////////////BANK FUNCTION/////////////////////////////////
+void bankOverlord()
+{
+	double bank = 100;
+	double borrowMoney = 0;
+	double owedMoney = 0;
+
+	cout << "\nWelcome to the bank! Remember whatever you borrow will need to be payed back, \
+	plus 10%.\n";
+	cout << "The bank has $" << bank << ". How much would you like to borrow?\n";
+	
+	cin >> borrowMoney;
+	borrowMoney = borrowMoney;
+	playerMoney = playerMoney + borrowMoney;
+	owedMoney = borrowMoney + (borrowMoney * .1);
+
+	cout << "amount borrowed " << borrowMoney;
+	cout << "\namount owed " << owedMoney;
+	
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+
 //////////Function for generating calculating player money//////////
 //int moneyCalculation(playerMoney)
 //{
 //add winning and losing money here
 //}
 
-///need to rewrite the losing amount to scale better and not always lose 20 with a wrong guess
+
 /*
 ---Features
 Store player info in file
