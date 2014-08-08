@@ -14,6 +14,7 @@ double playerMoney  = 20;   //variable for player's money. Re-factor to header w
 int playerSelection = 0;	//choice player makes at each sequence
 int playerGuess     = 0;	//the player's number guess, between 0-101
 int randNumber      = 0;	//the randomly generated number from the house
+double bank         = 100;	//the bank. Careful, he'll break your fingers.
 
 //FUNCTIONS
 int playerChoiceFunc(int playerSelection);
@@ -52,7 +53,7 @@ void selectionScreen()
 {
 	//ask player what he wants to do
 	cout << "\nYou have $" << playerMoney << endl;
-	cout << "What would you like to do?\n"
+	cout << "\nWhat would you like to do?\n"
 		 << "\nPress 1 for game rules.\n"
 		 << "Press 2 to enter your guess.\n"
 		 << "Press 3 to to access bank.\n"
@@ -104,9 +105,10 @@ int playerChoiceFunc(int playerSelection)
 			}
 			else if (tempChoice == 0)
 			{
-				return 1;			//wtf to return here? Need an exit.
+				return -1;			//wtf to return here? Need an exit.
 			}
 		}
+		cout << "\nYour money, " << playerMoney << " - $5 for guessing.";
 		cout << "\nEnter your guess, between 0 and 101. ";
 		cin >> playerGuess;
 
@@ -207,29 +209,43 @@ int guessMath(int playerGuess)
 	return randNumber;
 }
 
-
-////////////////////////////BANK FUNCTION/////////////////////////////////
+////////Bank money calculation. Need to pass some arguments here to keep track ///////
 void bankOverlord()
 {
-	double bank = 100;
 	double borrowMoney = 0;
 	double owedMoney = 0;
 
 	cout << "\nWelcome to the bank! Remember whatever you borrow will need to be payed back, \
 	plus 10%.\n";
-	cout << "The bank has $" << bank << ". How much would you like to borrow?\n";
+	cout << "The bank has $" << bank << "." << endl;
+	cout << "You owe the bank " << owedMoney << "." << endl;
 	
 	cin >> borrowMoney;
-	borrowMoney = borrowMoney;
-	playerMoney = playerMoney + borrowMoney;
-	owedMoney = borrowMoney + (borrowMoney * .1);
 
-	cout << "amount borrowed " << borrowMoney;
-	cout << "\namount owed " << owedMoney;
+	//While the bank doesn't have 0
+	while (bank >= 0)
+	{
+		//If the bank is out of money, tell the player
+		if (bank <= 0)						
+		{
+			cout << "You can't borrow more than the bank has.";
+		}
+		//If the bank has money, track how much borrowed and owed, plus interest
+		else								
+		{
+			bank = bank - borrowMoney;
+			borrowMoney = borrowMoney;
+			playerMoney = playerMoney + borrowMoney;
+			owedMoney = borrowMoney + (borrowMoney * .1);
+		}
+		break;
+	}
+
+	cout << "\nAmount borrowed: " << borrowMoney;
+	cout << "\nAmount owed: " << owedMoney;
+	cout << "\nAmount left in Bank: " << bank;
 	
 }
-
-//////////////////////////////////////////////////////////////////////////
 
 
 //////////Function for generating calculating player money//////////
