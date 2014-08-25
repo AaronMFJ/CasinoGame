@@ -7,14 +7,14 @@
 //DECLARATIONS
 using namespace std;
 
-
 //GLOBAL VARIABLES
-string playerName;			//string for player's name
-double playerMoney  = 20;   //variable for player's money. Re-factor to header with class later
-int playerSelection = 0;	//choice player makes at each sequence
-int playerGuess     = 0;	//the player's number guess, between 0-101
-int randNumber      = 0;	//the randomly generated number from the house
-double bank         = 100;	//the bank. Careful, he'll break your fingers.
+string playerName;				//string for player's name
+double playerMoney  = 20;		//variable for player's money. Re-factor to header with class later
+int playerSelection = 0;		//choice player makes at each sequence
+int playerGuess     = 0;		//the player's number guess, between 0-101
+int randNumber      = 0;		//the randomly generated number from the house
+double bank         = 100;		//the bank. Careful, he'll break your fingers.
+double owedMoney	= 0;		//how much you owe the bank, plus interest
 
 //FUNCTIONS
 int playerChoiceFunc(int playerSelection);
@@ -213,12 +213,11 @@ int guessMath(int playerGuess)
 void bankOverlord()
 {
 	double borrowMoney = 0;
-	double owedMoney = 0;
 
 	cout << "\nWelcome to the bank! Remember whatever you borrow will need to be payed back, \
 	plus 10%.\n";
 	cout << "The bank has $" << bank << "." << endl;
-	cout << "You owe the bank " << owedMoney << "." << endl;
+	cout << "You owe the bank $" << owedMoney << "." << endl;
 	
 	cin >> borrowMoney;
 
