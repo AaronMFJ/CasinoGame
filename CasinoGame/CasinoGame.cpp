@@ -213,13 +213,28 @@ int guessMath(int playerGuess)
 void bankOverlord()
 {
 	double borrowMoney = 0;
+	
+	//if the bank has 0 or less, tell player the bank is out.
+	if (bank <= 0)
+		{
+			cout << "You have borrowed your limit. Please repay the bank.";
+		}
 
+	//state how much the bank has and how much you owe
 	cout << "\nWelcome to the bank! Remember whatever you borrow will need to be payed back, \
 	plus 10%.\n";
 	cout << "The bank has $" << bank << "." << endl;
 	cout << "You owe the bank $" << owedMoney << "." << endl;
 	
-	cin >> borrowMoney;
+	//ask player how much to borrow and store it
+	cout << "\nHow much would you like to borrow? ";
+
+	cin >> borrowMoney; //refactor this to a getline instead of cin.
+
+	//if (borrowMoney != (int)cin.peek())
+	//{
+	//	cout << "Please enter a number!" << endl;
+	//}
 
 	//While the bank doesn't have 0
 	while (bank >= 0)
