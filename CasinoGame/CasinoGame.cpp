@@ -212,7 +212,8 @@ int guessMath(int playerGuess)
 ////////Bank money calculation. Need to pass some arguments here to keep track ///////
 void bankOverlord()
 {
-	double borrowMoney = 0;
+	int borrowMoney = 0;
+	bool validNumber = false;
 	
 	//if the bank has 0 or less, tell player the bank is out.
 	if (bank <= 0)
@@ -229,12 +230,23 @@ void bankOverlord()
 	//ask player how much to borrow and store it
 	cout << "\nHow much would you like to borrow? ";
 
-	cin >> borrowMoney; //refactor this to a getline instead of cin.
+	while (validNumber == false)
+	{
+		cin >> borrowMoney;
+		if (cin.good() != 1)
+		{
+			//clear and flush. Without these two cin. it goes into infinite loop with borrowMoney stored in buffer
+			cin.clear();			//clear error flags
+			cin.sync();				//flush the input buffer. 
+			cout << "Please enter a valid number" << endl;
+		}
+		else
+		{
+			validNumber = true;
+		}
+		
+	}
 
-	//if (borrowMoney != (int)cin.peek())
-	//{
-	//	cout << "Please enter a number!" << endl;
-	//}
 
 	//While the bank doesn't have 0
 	while (bank >= 0)
