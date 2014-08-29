@@ -21,7 +21,7 @@ int playerChoiceFunc(int playerSelection);
 void selectionScreen();
 int guessMath(int playerGuess);
 void bankOverlord();
-//int moneyCalculation(double playerMoney);
+
 
 
 int main()
@@ -41,8 +41,6 @@ int main()
 
 	//display the selection screen and make a choice
 	selectionScreen();
-
-//	playerChoiceFunc(playerSelection);
 
 	system("PAUSE");
 	return 0;
@@ -259,10 +257,10 @@ void bankOverlord()
 		//If the bank has money, track how much borrowed and owed, plus interest
 		else								
 		{
-			bank = bank - borrowMoney;
-			borrowMoney = borrowMoney;
-			playerMoney = playerMoney + borrowMoney;
-			owedMoney = borrowMoney + (borrowMoney * .1);
+			bank = bank - borrowMoney;					//subtract what player wnts from the bank
+			borrowMoney = borrowMoney;					//set borrowmoney to borrowmoney. Was having problems with it getting lost
+			playerMoney = playerMoney + borrowMoney;	//add the borrowed money to the players money
+			owedMoney = owedMoney + borrowMoney + (borrowMoney * .1);	//owed money from previous borrows adds to what you're currently borrowing plus interest
 		}
 		break;
 	}
