@@ -212,7 +212,8 @@ void bankOverlord()
 {
 	int borrowMoney = 0;
 	bool validNumber = false;
-	
+	int bankChoice = 0;
+
 	//if the bank has 0 or less, tell player the bank is out.
 	if (bank <= 0)
 		{
@@ -224,14 +225,21 @@ void bankOverlord()
 	plus 10%.\n";
 	cout << "The bank has $" << bank << "." << endl;
 	cout << "You owe the bank $" << owedMoney << "." << endl;
+	cout << "\nWhat would you like to do?" << endl;
+	cout << "Borrow from the bank (press 1)." << endl;
+	cout << "Pay the bank back (press 2)." << endl;
 	
-	//ask player how much to borrow and store it
-	cout << "\nHow much would you like to borrow? ";
+	if (bankChoice == 1)
+	{
+		
+	}
 
+	//ask player how much to borrow and check the input for a number and not a string
+	cout << "\nHow much would you like to borrow? ";
 	while (validNumber == false)
 	{
 		cin >> borrowMoney;
-		if (cin.good() != 1)
+		if (cin.good() != 1)		//is cin a number? If not, returns 0(false). If it is a number, return true.
 		{
 			//clear and flush. Without these two cin. it goes into infinite loop with borrowMoney stored in buffer
 			cin.clear();			//clear error flags
