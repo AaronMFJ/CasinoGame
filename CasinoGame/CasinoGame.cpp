@@ -14,7 +14,9 @@ int playerSelection = 0;		//choice player makes at each sequence
 int playerGuess     = 0;		//the player's number guess, between 0-101
 int randNumber      = 0;		//the randomly generated number from the house
 double bank         = 100;		//the bank. Careful, he'll break your fingers.
-double owedMoney	= 0;		//how much you owe the bank, plus interest
+double owedMoney	= 0;		//how much player owes the bank, plus interest
+double bankPayment  = 0;		//how much player has paid back to the bank
+
 
 //FUNCTIONS
 int playerChoiceFunc(int playerSelection);
@@ -77,14 +79,16 @@ int playerChoiceFunc(int playerSelection)
 	//if player presses 0, exit son!
 	if (playerSelection == 0)
 	{
-		return -1;			//need to figure out how to exit game. Maybe send to quit function?
+		exit(0);			//need to figure out how to exit game. This may not be a good way to do it
 	}
 	
 	//if player selects 1, display directions the get input again
 	if (playerSelection == 1)
 	{
-		cout << "The point of the game is to guess a number and get as close as \
-		possible to a randomly generated number. It costs $5 to guess.\n";
+		cout << "\nThe point of the game is to guess a number and get as close as possible to a randomly generated number. It costs $5 to guess.\n"
+				"\nIf you run out of money, you can borrow some from the bank. You must repay the bank the amount owed plus interest.\n"
+				"\nIf you cannot pay the bank back, they will break your knees and pass the burden on to your children. They will never live a normal life.\n"
+				"Have fun!\n";
 		selectionScreen();
 	}
 
@@ -221,38 +225,50 @@ void bankOverlord()
 		}
 
 	//state how much the bank has and how much you owe
-	cout << "\nWelcome to the bank! Remember whatever you borrow will need to be payed back, \
-	plus 10%.\n";
+	cout << "\nWelcome to the bank! Remember whatever you borrow will need to be payed back, plus 10%.\n";
 	cout << "The bank has $" << bank << "." << endl;
 	cout << "You owe the bank $" << owedMoney << "." << endl;
 	cout << "\nWhat would you like to do?" << endl;
 	cout << "Borrow from the bank (press 1)." << endl;
 	cout << "Pay the bank back (press 2)." << endl;
 	
+	cin >> bankChoice;
+
+	//this is where we deal with how much money to borrow from the bank
 	if (bankChoice == 1)
 	{
-		
-	}
+		//ask player how much to borrow and check the input for a number and not a string
+		cout << "\nHow much would you like to borrow? ";
+		while (validNumber == false)
+		{
+			cin >> borrowMoney;
+			if (cin.good() != 1)		//is cin a number? If not, returns 0(false). If it is a number, return true.
+			{
+				//clear and flush. Without these two cin. it goes into infinite loop with borrowMoney stored in buffer
+				cin.clear();			//clear error flags
+				cin.sync();				//flush the input buffer. 
+				cout << "Please enter a valid number" << endl;
+			}
+			else
+			{
+				validNumber = true;
+			}
 
-	//ask player how much to borrow and check the input for a number and not a string
-	cout << "\nHow much would you like to borrow? ";
-	while (validNumber == false)
+		}
+	}
+	
+	//this is where we will deal with how to pay the bank back
+	if (bankChoice == 2)
 	{
-		cin >> borrowMoney;
-		if (cin.good() != 1)		//is cin a number? If not, returns 0(false). If it is a number, return true.
-		{
-			//clear and flush. Without these two cin. it goes into infinite loop with borrowMoney stored in buffer
-			cin.clear();			//clear error flags
-			cin.sync();				//flush the input buffer. 
-			cout << "Please enter a valid number" << endl;
-		}
-		else
-		{
-			validNumber = true;
-		}
-		
+		cout << "You owe the bank $" << owedMoney << endl;
+		cout << "How much would you like to pay back?\n";
+		cin >> bankPayment;
+		bankPayment = bankPayment;
+		owedMoney = owedMoney - bankPayment;
+		bank = bank + bankPayment;
+		playerMoney = playerMoney - bankPayment;
+		cout << "You paid $" << bankPayment << " and owe the bank $" << owedMoney << endl;
 	}
-
 
 	//While the bank doesn't have 0
 	while (bank >= 0)
