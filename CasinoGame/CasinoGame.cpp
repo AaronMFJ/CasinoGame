@@ -284,7 +284,7 @@ void bankOverlord()
 			bank = bank - borrowMoney;					//subtract what player wnts from the bank
 			borrowMoney = borrowMoney;					//set borrowmoney to borrowmoney. Was having problems with it getting lost
 			playerMoney = playerMoney + borrowMoney;	//add the borrowed money to the players money
-			owedMoney = owedMoney + borrowMoney + (borrowMoney * .1);	//owed money from previous borrows adds to what you're currently borrowing plus interest
+			owedMoney = owedMoney + borrowMoney + ceil((borrowMoney * .1));	//owed money from previous borrows adds to what you're currently borrowing plus interest. ceil() rounds up
 		}
 		break;
 	}
