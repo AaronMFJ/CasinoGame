@@ -18,9 +18,15 @@
     <ClCompile Include="CasinoGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CasinoForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CasinoPlayerInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasinoForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
