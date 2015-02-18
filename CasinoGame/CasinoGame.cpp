@@ -3,15 +3,15 @@
 #include <string>
 #include <ctime>
 
-
-//DECLARATIONS
+//DECLARATIONS and DEFINES
 using namespace std;
+#define GUESS_MIN 0
+#define GUESS_MAX 101
+
 
 //GLOBAL VARIABLES
 string playerName;				//string for player's name
-double playerMoney  = 20;		//variable for player's money. Re-factor to header with class later
-int playerSelection = 0;		//choice player makes at each sequence
-int playerGuess     = 0;		//the player's number guess, between 0-101
+double playerMoney  = 50;		//variable for player's money. Re-factor to header with class later
 int randNumber      = 0;		//the randomly generated number from the house
 double bank         = 100;		//the bank. Careful, he'll break your fingers.
 double owedMoney	= 0;		//how much player owes the bank, plus interest
@@ -51,6 +51,8 @@ int main()
 //////////FUNCTION FOR PLAYER CHOICE LAYOUT//////////
 void selectionScreen()
 {
+	int playerSelection = 0;		//choice player makes at each sequence
+
 	//ask player what he wants to do
 	cout << "\nYou have $" << playerMoney << endl;
 	cout << "\nWhat would you like to do?\n"
@@ -73,8 +75,8 @@ void selectionScreen()
 int playerChoiceFunc(int playerSelection)
 {
 	//this function is where we take players input and match it to desired choice
-	
-	int tempChoice = 0;
+	int playerGuess = 0;		//the player's number guess, between 0-101
+	int tempChoice = 0;         //a temp decision to make if you try to guess without having money - leave or bank.
 
 	//if player presses 0, exit son!
 	if (playerSelection == 0)
@@ -115,7 +117,7 @@ int playerChoiceFunc(int playerSelection)
 		cin >> playerGuess;
 
 		//this is where we handle if player selects an out-of-range number
-		while (playerGuess <= 0 || playerGuess >= 101)		 //remake this into declaration GUESS_MIN and GUESS_MAX
+		while (playerGuess <= GUESS_MIN || playerGuess >= GUESS_MAX)		 //remake this into declaration GUESS_MIN and GUESS_MAX
 		{
 			cout << playerGuess << "\nis not a valid choice. Try again.\n" << endl;
 			cin >> playerGuess;

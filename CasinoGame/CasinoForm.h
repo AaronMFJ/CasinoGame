@@ -1,7 +1,9 @@
 #pragma once
 
-namespace CasinoGame {
 
+namespace CasinoGame
+
+{
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -34,9 +36,15 @@ namespace CasinoGame {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::TextBox^  nameBox;
 	protected:
-	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::Button^  submitButton;
+
+
+	protected:
+
+	protected:
+
 
 	private:
 		/// <summary>
@@ -51,34 +59,39 @@ namespace CasinoGame {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->submitButton = (gcnew System::Windows::Forms::Button());
+			this->nameBox = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
 			// 
-			// button1
+			// submitButton
 			// 
-			this->button1->Location = System::Drawing::Point(161, 289);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(185, 43);
-			this->button1->TabIndex = 0;
-			this->button1->Text = L"button1";
-			this->button1->UseVisualStyleBackColor = true;
+			this->submitButton->BackColor = System::Drawing::SystemColors::ButtonFace;
+			this->submitButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->submitButton->Location = System::Drawing::Point(161, 289);
+			this->submitButton->Name = L"submitButton";
+			this->submitButton->Size = System::Drawing::Size(185, 43);
+			this->submitButton->TabIndex = 0;
+			this->submitButton->Text = L"Submit";
+			this->submitButton->UseVisualStyleBackColor = false;
 			// 
-			// textBox1
+			// nameBox
 			// 
-			this->textBox1->Location = System::Drawing::Point(161, 138);
-			this->textBox1->Multiline = true;
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(185, 36);
-			this->textBox1->TabIndex = 1;
+			this->nameBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->nameBox->Location = System::Drawing::Point(161, 138);
+			this->nameBox->Multiline = true;
+			this->nameBox->Name = L"nameBox";
+			this->nameBox->Size = System::Drawing::Size(185, 36);
+			this->nameBox->TabIndex = 1;
 			// 
 			// CasinoForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(539, 392);
-			this->Controls->Add(this->textBox1);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->nameBox);
+			this->Controls->Add(this->submitButton);
 			this->Name = L"CasinoForm";
 			this->Text = L"CasinoForm";
 			this->ResumeLayout(false);
@@ -86,5 +99,8 @@ namespace CasinoGame {
 
 		}
 #pragma endregion
+	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+	}
 	};
 }

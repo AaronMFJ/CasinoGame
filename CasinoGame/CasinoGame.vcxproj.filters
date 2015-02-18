@@ -19,7 +19,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CasinoForm.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -29,5 +29,10 @@
     <ClInclude Include="CasinoForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CasinoForm.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
