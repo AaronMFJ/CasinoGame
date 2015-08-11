@@ -49,6 +49,8 @@ int main()
 }
 
 //////////FUNCTION FOR PLAYER CHOICE LAYOUT//////////
+/////////////////////////////////////////////////////
+
 void selectionScreen()
 {
 	int playerSelection = 0;		//choice player makes at each sequence
@@ -72,6 +74,8 @@ void selectionScreen()
 }
 
 //////////Function Call for what the player chooses to do//////////
+///////////////////////////////////////////////////////////////////
+
 int playerChoiceFunc(int playerSelection)
 {
 	//this function is where we take players input and match it to desired choice
@@ -112,12 +116,12 @@ int playerChoiceFunc(int playerSelection)
 				return -1;			//wtf to return here? Need an exit.
 			}
 		}
-		cout << "\nYour money, " << playerMoney << " - $5 for guessing.";
+		cout << "\nYour money, $" << playerMoney << " - $5 for guessing.";
 		cout << "\nEnter your guess, between 0 and 101. ";
 		cin >> playerGuess;
 
 		//this is where we handle if player selects an out-of-range number
-		while (playerGuess <= GUESS_MIN || playerGuess >= GUESS_MAX)		 //remake this into declaration GUESS_MIN and GUESS_MAX
+		while (playerGuess <= GUESS_MIN || playerGuess >= GUESS_MAX)
 		{
 			cout << playerGuess << "\nis not a valid choice. Try again.\n" << endl;
 			cin >> playerGuess;
@@ -137,6 +141,8 @@ int playerChoiceFunc(int playerSelection)
 }
 
 //////////Function for generating random number and comparing against player guess//////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
 int guessMath(int playerGuess)
 {
 	int guessDifference = 0;
@@ -214,6 +220,8 @@ int guessMath(int playerGuess)
 }
 
 ////////Bank money calculation. Need to pass some arguments here to keep track ///////
+//////////////////////////////////////////////////////////////////////////////////////
+
 void bankOverlord()
 {
 	int borrowMoney = 0;
@@ -223,7 +231,7 @@ void bankOverlord()
 	//if the bank has 0 or less, tell player the bank is out.
 	if (bank <= 0)
 		{
-			cout << "You have borrowed your limit. Please repay the bank.";
+			cout << "You have borrowed your limit. Please repay the bank.";     //need to remove options for borrowing money when bank is out
 		}
 
 	//state how much the bank has and how much you owe
@@ -231,9 +239,10 @@ void bankOverlord()
 	cout << "The bank has $" << bank << "." << endl;
 	cout << "You owe the bank $" << owedMoney << "." << endl;
 	cout << "\nWhat would you like to do?" << endl;
-	cout << "Borrow from the bank (press 1)." << endl;
+	cout << "\nBorrow from the bank (press 1)." << endl;
 	cout << "Pay the bank back (press 2)." << endl;
-	
+	cout << "Exit the bank and return to game. (press 3)." << endl;
+	cout << "Save game and exit to desktop (press 0)." << endl;		//furture addition-player management and saving/reading from log.
 	cin >> bankChoice;
 
 	//this is where we deal with how much money to borrow from the bank
@@ -270,6 +279,12 @@ void bankOverlord()
 		bank = bank + bankPayment;
 		playerMoney = playerMoney - bankPayment;
 		cout << "You paid $" << bankPayment << " and owe the bank $" << owedMoney << endl;
+	}
+
+	//this is where we send player back to selection screen
+	if (bankChoice == 0)
+	{
+		selectionScreen();
 	}
 
 	//While the bank doesn't have 0
