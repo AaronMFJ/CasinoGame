@@ -1,5 +1,6 @@
 //INCLUDES
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <ctime>
 
@@ -25,7 +26,6 @@ int guessMath(int playerGuess);
 void bankOverlord();
 
 
-
 int main()
 {
 	//initialize random seed off clock time
@@ -37,9 +37,12 @@ int main()
 	getline(cin, playerName);
 	cout << "\nGreat! Welcome " << playerName;
 
-					//			FUTURE UPDATE
-					//This is where we will check a file for
-					// the player's name, and load any stats
+	//WIP creating a save file for the player//
+	ofstream savedGame;
+	savedGame.open ("SAVEFILE.txt", ios::app);
+	savedGame << "Writing this to a file.\n" << playerName;
+	savedGame.close();
+	///////////////////////////////////////////
 
 	//display the selection screen and make a choice
 	selectionScreen();
@@ -72,6 +75,10 @@ void selectionScreen()
 	//continue letting player play, until he exits out
 	selectionScreen();
 }
+
+////////FUNCTION FOR CREATING AND SAVING TO FILE/////////
+/////////////////////////////////////////////////////////
+
 
 //////////Function Call for what the player chooses to do//////////
 ///////////////////////////////////////////////////////////////////
